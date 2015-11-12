@@ -1,0 +1,74 @@
+//Mic Memory Declaration
+microcode bank[35:4] CS.m1;
+microcode bank[3:0] CS.m2;
+
+//Field Definitions
+field nextAddr[35:27];
+
+field jmpc[26];
+field jamn[25];
+field jamz[24];
+
+field sh[23:22] = {
+   nsh=0,
+   shr1=1,
+   shl8=2,
+   notused=3
+};
+
+field alu[21:16] = {
+   A=24,
+   B=20,
+   notA=26,
+   notB=44,
+   AplusB=60,
+   AplusBplusOne=61,
+   incA=57,
+   incB=53,
+   BminusA=63,
+   decB=54,
+   negA=59,
+   AandB=12,
+   AorB=28,
+   zero=16,
+   one=49,
+   negOne=50
+};
+
+field C[15:7] = {
+   H=256,
+   OPC=128,
+   TOS=64,
+   CPP=32,
+   LV=16,
+   SP=8,
+   PC=4,
+   MDR=2,
+   MAR=1
+};
+
+field wr[6];
+field rd[5];
+field fetch[4];
+
+field B[3:0] = {
+   mdr=0,
+   pc=1,
+   mbr=2,
+   mbru=3,
+   sp=4,
+   lv=5,
+   cpp=6,
+   tos=7,
+   opc=8,
+   none=15
+};
+
+
+begin microcode@0
+   nextAddr=0x40;                                     //0x00
+   nextAddr=0x4f B=pc alu=incB C=PC C=TOS;            //0x01
+
+   nextAddr=0x22 B=lv C=H;                             //0x15
+end
+     
