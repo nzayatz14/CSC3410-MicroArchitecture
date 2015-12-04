@@ -1,0 +1,437 @@
+//Mic Memory Declaration
+microcode bank[35:4] CS.m1;
+microcode bank[3:0] CS.m2;
+
+//Field Definitions
+field nextAddr[35:27];
+
+field jmpc[26];
+field jamn[25];
+field jamz[24];
+
+field sh[23:22] = {
+   nsh=0,
+   shr1=1,
+   shl8=2,
+   notused=3
+};
+
+field alu[21:16] = {
+   A=24,
+   B=20,
+   notA=26,
+   notB=44,
+   AplusB=60,
+   AplusBplusOne=61,
+   incA=57,
+   incB=53,
+   BminusA=63,
+   decB=54,
+   negA=59,
+   AandB=12,
+   AorB=28,
+   zero=16,
+   one=49,
+   negOne=50
+};
+
+field C[15:7] = {
+   H=256,
+   OPC=128,
+   TOS=64,
+   CPP=32,
+   LV=16,
+   SP=8,
+   PC=4,
+   MDR=2,
+   MAR=1
+};
+
+field wr[6];
+field rd[5];
+field fetch[4];
+
+field B[3:0] = {
+   mdr=0,
+   pc=1,
+   mbr=2,
+   mbru=3,
+   sp=4,
+   lv=5,
+   cpp=6,
+   tos=7,
+   opc=8,
+   none=15
+};
+
+
+begin microcode@0
+   nextAddr=0x40;                                     //0x00 NOP1
+   nextAddr=0x4f B=pc alu=incB C=PC C=TOS;            //0x01 F
+   nextAddr=0x06;                                     //0x02 INF LOOP
+   nextAddr=0x06;                                     //0x03 INF LOOP 
+   nextAddr=0x06;                                     //0x04 INF LOOP
+   nextAddr=0x06;                                     //0x05 INF LOOP
+   nextAddr=0x06;                                     //0x06 INF LOOP
+   nextAddr=0x06;                                     //0x07 INF LOOP
+   nextAddr=0x06;                                     //0x08 INF LOOP
+   nextAddr=0x06;                                     //0x09 INF LOOP
+   nextAddr=0x06;                                     //0x0A INF LOOP
+   nextAddr=0x06;                                     //0x0B INF LOOP
+   nextAddr=0x06;                                     //0x0C INF LOOP
+   nextAddr=0x06;                                     //0x0D INF LOOP
+   nextAddr=0x06;                                     //0x0E INF LOOP
+   nextAddr=0x06;                                     //0x0F INF LOOP
+   nextAddr=0x41 B=sp alu=incB C=SP C=MAR;            //0x10 BIPUSH1
+   nextAddr=0x06;                                     //0x11 INF LOOP
+   nextAddr=0x06;                                     //0x12 INF LOOP
+   nextAddr=0xE2 B=pc alu=incB C=PC fetch;            //0x13 LDC_W1
+   nextAddr=0x06;                                     //0x14 INF LOOP
+   nextAddr=0x22 B=lv alu=B C=H;                      //0x15 ILOAD1
+   nextAddr=0x06;                                     //0x16 INF LOOP
+   nextAddr=0x06;                                     //0x17 INF LOOP
+   nextAddr=0x06;                                     //0x18 INF LOOP
+   nextAddr=0x06;                                     //0x19 INF LOOP
+   nextAddr=0x06;                                     //0x1A INF LOOP
+   nextAddr=0x06;                                     //0x1B INF LOOP
+   nextAddr=0x06;                                     //0x1C INF LOOP
+   nextAddr=0x06;                                     //0x1D INF LOOP
+   nextAddr=0x06;                                     //0x1E INF LOOP
+   nextAddr=0x06;                                     //0x1F INF LOOP
+   nextAddr=0xE1 B=sp alu=B C=MAR;                    //0x20 SWAP2
+   nextAddr=0xC1 B=sp alu=decB C=MAR wr;              //0x21 SWAP5
+   nextAddr=0x23 B=mbru alu=AplusB C=MAR rd;          //0x22 ILOAD2
+   nextAddr=0x42 B=sp alu=incB C=MAR C=SP;            //0x23 ILOAD3
+   nextAddr=0x38 B=mbru alu=AplusB C=MAR;             //0x24 ISTORE2
+   nextAddr=0x23 B=cpp alu=AplusB C=MAR rd;           //0x25 LDC_W4
+   nextAddr=0xE6 B=sp alu=decB C=MAR C=SP;            //0x26 IF_CMPEQ2
+   nextAddr=0xD1 B=cpp alu=AplusB C=MAR rd;           //0x27 INVOKEVIRTUAL4
+   nextAddr=0x3B B=mdr alu=B C=MAR C=SP;              //0x28 INVOKEVIRTUAL17
+   nextAddr=0x45 B=lv alu=incB C=MAR;                 //0x29 IRETURN4
+   nextAddr=0x83 B=sp alu=B C=MAR;                    //0x2A IRETURN6
+   nextAddr=0x47 B=mbru alu=AplusB C=MAR rd;          //0x2B IINC2
+   nextAddr=0x3C B=sp alu=incB C=MAR C=SP;            //0x2C INVOKEVIRTUAL19
+   nextAddr=0x06;                                     //0x2D INF LOOP
+   nextAddr=0x06;                                     //0x2E INF LOOP
+   nextAddr=0x06;                                     //0x2F INF LOOP
+   nextAddr=0x40 B=mdr alu=AplusB C=MDR C=TOS wr;     //0x30 IADD3
+   nextAddr=0x40 B=mdr alu=BminusA C=MDR C=TOS wr;    //0x31 ISUB3
+   nextAddr=0x40 B=mdr alu=AandB C=MDR C=TOS wr;      //0x32 IAND3
+   nextAddr=0x40 B=mdr alu=AorB C=MDR C=TOS wr;       //0x33 IOR3
+   nextAddr=0x40 B=tos alu=B C=MDR wr;                //0x34 DUP2 IRETURN8
+   nextAddr=0x21 B=tos alu=B C=MDR;                   //0x35 SWAP4
+   nextAddr=0x24 B=lv alu=B C=H;                      //0x36 ISTORE1
+   nextAddr=0x40 B=mbr alu=B C=MDR C=TOS wr;          //0x37 BIPUSH3
+   nextAddr=0x70 B=tos alu=B C=MDR wr;                //0x38 ISTORE3
+   nextAddr=0x40 B=mbr alu=AplusB C=MDR wr;           //0x39 IINC6
+   nextAddr=0x28 B=sp alu=AplusBplusOne C=MDR wr;     //0x3A INVOKEVIRTUAL16
+   nextAddr=0x2C B=opc alu=B C=MDR wr;                //0x3B INVOKEVIRTUAL18
+   nextAddr=0x4D B=lv alu=B C=MDR wr;                 //0x3C INVOKEVIRTUAL20
+   nextAddr=0x06;                                     //0x3D INF LOOP
+   nextAddr=0x06;                                     //0x3E INF LOOP
+   nextAddr=0x06;                                     //0x3F INF LOOP
+                                                      //0x40 SKIPPED
+   nextAddr=0x37 B=pc alu=incB C=PC fetch;            //0x41 BIPUSH2
+   nextAddr=0xC0 B=pc alu=incB C=PC fetch wr;         //0x42 ILOAD4
+   nextAddr=0x91 B=opc alu=AplusB C=PC fetch;         //0x43 GOTO5
+   nextAddr=0x4A B=mdr alu=B C=PC fetch;              //0x44 INVOKEVIRTUAL6
+   nextAddr=0x2A B=mdr alu=B C=PC rd fetch;           //0x45 IRETURN5
+   nextAddr=0xC0 B=pc alu=incB C=PC fetch;            //0x46 ISTORE5 
+   nextAddr=0xE4 B=pc alu=incB C=PC fetch;            //0x47 IINC3 
+   nextAddr=0x39 B=pc alu=incB C=PC fetch;            //0x48 IINC5  
+   nextAddr=0xE5 B=pc alu=incB C=PC fetch;            //0x49 GOTO2 
+   nextAddr=0xEB B=pc alu=incB C=PC fetch;            //0x4A INVOKEVIRTUAL7 
+   nextAddr=0xC3 B=pc alu=incB C=PC fetch;            //0x4B INVOKEVIRTUAL10 
+   nextAddr=0xEC B=pc alu=incB C=PC fetch;            //0x4C INVOKEVIRTUAL13 
+   nextAddr=0x81 B=pc alu=incB C=PC fetch;            //0x4D INVOKEVIRTUAL21 
+   nextAddr=0x06;                                     //0x4E INF LOOP
+   nextAddr=0x91 B=pc alu=incB C=PC fetch;            //0x4F F2 
+   nextAddr=0x06;                                     //0x50 INF LOOP 
+   nextAddr=0x06;                                     //0x51 INF LOOP 
+   nextAddr=0x06;                                     //0x52 INF LOOP 
+   nextAddr=0x06;                                     //0x53 INF LOOP 
+   nextAddr=0x06;                                     //0x54 INF LOOP 
+   nextAddr=0x06;                                     //0x55 INF LOOP 
+   nextAddr=0x06;                                     //0x56 INF LOOP
+   nextAddr=0x94 B=sp alu=decB C=MAR C=SP rd;         //0x57 POP1
+   nextAddr=0x06;                                     //0x58 INF LOOP
+   nextAddr=0x34 B=sp alu=incB C=MAR C=SP;            //0x59 DUP1
+   nextAddr=0x06;                                     //0x5A INF LOOP
+   nextAddr=0x06;                                     //0x5B INF LOOP
+   nextAddr=0x06;                                     //0x5C INF LOOP
+   nextAddr=0x06;                                     //0x5D INF LOOP
+   nextAddr=0x06;                                     //0x5E INF LOOP
+   nextAddr=0x20 B=sp alu=decB C=MAR rd;              //0x5F SWAP1
+   nextAddr=0xE0 B=sp alu=decB C=MAR C=SP rd;         //0x60 IADD1
+   nextAddr=0x06;                                     //0x61 INF LOOP
+   nextAddr=0x06;                                     //0x62 INF LOOP
+   nextAddr=0x06;                                     //0x63 INF LOOP
+   nextAddr=0xE7 B=sp alu=decB C=MAR C=SP rd;         //0x64 ISUB1
+   nextAddr=0x06;                                     //0x65 INF LOOP
+   nextAddr=0x06;                                     //0x66 INF LOOP
+   nextAddr=0x06;                                     //0x67 INF LOOP
+   nextAddr=0x06;                                     //0x68 INF LOOP
+   nextAddr=0x06;                                     //0x69 INF LOOP
+   nextAddr=0x06;                                     //0x6A INF LOOP
+   nextAddr=0x06;                                     //0x6B INF LOOP
+   nextAddr=0x06;                                     //0x6C INF LOOP
+   nextAddr=0x06;                                     //0x6D INF LOOP
+   nextAddr=0x06;                                     //0x6E INF LOOP
+   nextAddr=0x06;                                     //0x6F INF LOOP
+   nextAddr=0x46 B=sp alu=decB C=SP C=MAR rd;         //0x70 ISTORE4
+   nextAddr=0x06;                                     //0x71 INF LOOP
+   nextAddr=0x06;                                     //0x72 INF LOOP
+   nextAddr=0x06;                                     //0x73 INF LOOP
+   nextAddr=0x06;                                     //0x74 INF LOOP
+   nextAddr=0x06;                                     //0x75 LOADPC1
+   nextAddr=0x06;                                     //0x76 LOADLV1
+   nextAddr=0x06;                                     //0x77 LOADCPP
+   nextAddr=0x06;                                     //0x78 LOADSP
+   nextAddr=0x06;                                     //0x79 INF LOOP
+   nextAddr=0x06;                                     //0x7A INF LOOP
+   nextAddr=0x06;                                     //0x7B INF LOOP
+   nextAddr=0x06;                                     //0x7C INF LOOP
+   nextAddr=0x06;                                     //0x7D INF LOOP
+   nextAddr=0xE8 B=sp alu=decB C=MAR C=SP;            //0x7E IAND1
+   nextAddr=0x06;                                     //0x7F INF LOOP 
+   nextAddr=0xE9 B=sp alu=incB C=SP C=MAR;            //0x80 IOR1
+   nextAddr=0x40 B=tos alu=B C=LV;                    //0x81 INVOKEVIRTUAL22
+   nextAddr=0x29 B=mdr alu=B C=MAR C=LV rd;           //0x82 IRETURN3
+   nextAddr=0x34 B=mdr alu=B C=LV;                    //0x83 IRETURN7
+   nextAddr=0x2B B=lv alu=B C=H;                      //0x84 IINC1
+   nextAddr=0x06;                                     //0x85 INF LOOP  
+   nextAddr=0x06;                                     //0x86 HALT  
+   nextAddr=0x06;                                     //0x87 INF LOOP  
+   nextAddr=0x06;                                     //0x88 INF LOOP  
+   nextAddr=0x06;                                     //0x89 INF LOOP        
+   nextAddr=0x06;                                     //0x8A INF LOOP        
+   nextAddr=0x06;                                     //0x8B INF LOOP        
+   nextAddr=0x06;                                     //0x8C INF LOOP        
+   nextAddr=0x06;                                     //0x8D INF LOOP        
+   nextAddr=0x06;                                     //0x8E INF LOOP        
+   nextAddr=0x06;                                     //0x8F INF LOOP        
+   nextAddr=0x00;                                     //0x90 SKIPPED
+   nextAddr=0x40;                                     //0x91 GOTO6
+   nextAddr=0x00;                                     //0x92 SKIPPED
+   nextAddr=0x00;                                     //0x93 SKIPPED
+   nextAddr=0xC0;                                     //0x94 POP2
+   nextAddr=0x82;                                     //0x95 IRETURN2
+   nextAddr=0x00;                                     //0x96 SKIPPED
+   nextAddr=0x00;                                     //0x97 INF LOOP
+   nextAddr=0x00;                                     //0x98 INF LOOP
+   nextAddr=0xD0 B=sp alu=decB C=MAR rd;              //0x99 IFEQ1
+   nextAddr=0x00;                                     //0x9A INF LOOP
+   nextAddr=0xD4 B=sp alu=decB C=MAR rd;              //0x9B IFLT1
+   nextAddr=0x00;                                     //0x9C INF LOOP
+   nextAddr=0x00;                                     //0x9D INF LOOP
+   nextAddr=0x00;                                     //0x9E INF LOOP
+   nextAddr=0x26 B=sp alu=decB C=MAR rd;              //0x9F IF_ICMPEQ1
+   nextAddr=0x00;                                     //0xA0 INF LOOP
+   nextAddr=0x00;                                     //0xA1 INF LOOP
+   nextAddr=0x00;                                     //0xA2 INF LOOP
+   nextAddr=0x00;                                     //0xA3 INF LOOP
+   nextAddr=0x00;                                     //0xA4 INF LOOP
+   nextAddr=0x00;                                     //0xA5 INF LOOP
+   nextAddr=0x00;                                     //0xA6 INF LOOP
+   nextAddr=0x49 B=pc alu=decB C=OPC;                 //0xA7 GOTO1
+   nextAddr=0x00;                                     //0xA8 INF LOOP
+   nextAddr=0x00;                                     //0xA9 INF LOOP
+   nextAddr=0x00;                                     //0xAA INF LOOP
+   nextAddr=0x00;                                     //0xAB INF LOOP
+   nextAddr=0x95 B=lv alu=B C=SP C=MAR rd;            //0xAC IRETURN1
+   nextAddr=0x00;                                     //0xAD INF LOOP
+   nextAddr=0x00;                                     //0xAE INF LOOP
+   nextAddr=0x00;                                     //0xAF INF LOOP
+   nextAddr=0x00;                                     //0xB0 INF LOOP
+   nextAddr=0x00;                                     //0xB1 INF LOOP
+   nextAddr=0x00;                                     //0xB2 INF LOOP
+   nextAddr=0x00;                                     //0xB3 INF LOOP
+   nextAddr=0x00;                                     //0xB4 INF LOOP
+   nextAddr=0x00;                                     //0xB5 INF LOOP
+   nextAddr=0xEA B=pc alu=incB C=PC fetch;            //0xB6 INVOKEVIRTUAL1
+   nextAddr=0x00;                                     //0xB7 INF LOOP
+   nextAddr=0x00;                                     //0xB8 INF LOOP
+   nextAddr=0x00;                                     //0xB9 INF LOOP
+   nextAddr=0x00;                                     //0xBA INF LOOP
+   nextAddr=0x00;                                     //0xBB INF LOOP
+   nextAddr=0x00;                                     //0xBC INF LOOP
+   nextAddr=0x00;                                     //0xBD INF LOOP
+   nextAddr=0x00;                                     //0xBE INF LOOP
+   nextAddr=0x00;                                     //0xBF INF LOOP
+   nextAddr=0x40 B=mdr alu=B C=TOS;                   //0xC0 POP3
+   nextAddr=0x40 alu=A C=TOS;                         //0xC1 SWAP6 
+   nextAddr=0x92 B=mdr alu=B C=TOS;                   //0xC2 IFEQ3
+   nextAddr=0xC5 B=sp alu=BminusA C=TOS;              //0xC3 INVOKEVIRTUAL11
+   nextAddr=0x90 B=pc alu=incB C=PC fetch;            //0xC4 WIDE1
+   nextAddr=0x4C B=tos alu=incB C=MAR C=TOS;          //0xC5 INVOKEVIRTUAL12
+   nextAddr=0x93 B=mdr alu=B C=TOS;                   //0xC6 IF_ICMPEQ5
+   nextAddr=0x96 B=mdr alu=B C=TOS;                   //0xC7 IFLT3
+   nextAddr=0x00;                                     //0xC8 INF LOOP
+   nextAddr=0x00;                                     //0xC9 INF LOOP
+   nextAddr=0x00;                                     //0xCA INF LOOP
+   nextAddr=0x00;                                     //0xCB INF LOOP
+   nextAddr=0x00;                                     //0xCC INF LOOP
+   nextAddr=0x00;                                     //0xCD INF LOOP
+   nextAddr=0x00;                                     //0xCE INF LOOP
+   nextAddr=0x00;                                     //0xCF INF LOOP
+   nextAddr=0xC2 B=tos alu=B C=OPC;                   //0xD0 IFEQ2
+   nextAddr=0x44 B=pc alu=incB C=OPC;                 //0xD1 INVOKEVIRTUAL5
+   nextAddr=0xC6 B=tos alu=B C=OPC;                   //0xD2 IF_ICMPEQ4
+   nextAddr=0x00;                                     //0xD3 INF LOOP
+   nextAddr=0xC7 B=tos alu=B C=OPC;                   //0xD4 IFLT2
+   nextAddr=0x00;                                     //0xD5 INF LOOP
+   nextAddr=0x00;                                     //0xD6 INF LOOP
+   nextAddr=0x00;                                     //0xD7 INF LOOP
+   nextAddr=0x00;                                     //0xD8 INF LOOP
+   nextAddr=0x00;                                     //0xD9 INF LOOP
+   nextAddr=0x00;                                     //0xDA INF LOOP
+   nextAddr=0x00;                                     //0xDB INF LOOP
+   nextAddr=0x00;                                     //0xDC INF LOOP
+   nextAddr=0x00;                                     //0xDD INF LOOP
+   nextAddr=0x00;                                     //0xDE INF LOOP
+   nextAddr=0x00;                                     //0xDF INF LOOP
+   nextAddr=0x30 B=tos alu=B C=H;                     //0xE0 IADD2
+   nextAddr=0x35 B=mdr alu=B C=H wr;                  //0xE1 SWAP3
+   nextAddr=0xE3 B=mbru alu=AorB C=H sh=shl8;         //0xE2 LDC_W2
+   nextAddr=0x25 B=mbru alu=B C=H;                    //0xE3 LDC_W3
+   nextAddr=0x48 B=mdr alu=B C=H;                     //0xE4 IINC4
+   nextAddr=0xED B=mbr alu=B C=H sh=shl8;             //0xE5 GOTO3
+   nextAddr=0xD2 B=mdr alu=B C=H rd;                  //0xE6 IF_ICMPEQ3
+   nextAddr=0x31 B=tos alu=B C=H;                     //0xE7 ISUB2 
+   nextAddr=0x32 B=tos alu=B C=H;                     //0xE8 IAND2
+   nextAddr=0x33 B=tos alu=B C=H;                     //0xE9 IOR2
+   nextAddr=0xEE B=mbru alu=B C=H sh=shl8;            //0xEA INVOKEVIRTUAL2
+   nextAddr=0xEF B=mbru alu=B C=H sh=shl8;            //0xEB INVOKEVIRTUAL8
+   nextAddr=0xF0 B=mbru alu=B C=H sh=shl8;            //0xEC INVOKEVIRTUAL14
+   nextAddr=0x43 B=mbru alu=AorB C=H;                 //0xED GOTO4
+   nextAddr=0x27 B=mbru alu=AorB C=H;                 //0xEE INVOKEVIRTUAL3
+   nextAddr=0x4B B=mbru alu=AorB C=H;                 //0xEF INVOKEVIRTUAL9
+   nextAddr=0x3A B=mbru alu=AorB C=H;                 //0xF0 INVOKEVIRTUAL15
+   nextAddr=0x06;                                     //0xF1
+   nextAddr=0x06;                                     //0xF2
+   nextAddr=0x06;                                     //0xF3
+   nextAddr=0x06;                                     //0xF4
+   nextAddr=0x06;                                     //0xF5
+   nextAddr=0x06;                                     //0xF6
+   nextAddr=0x06;                                     //0xF7
+   nextAddr=0x06;                                     //0xF8
+   nextAddr=0x06;                                     //0xF9
+   nextAddr=0x06;                                     //0xFA
+   nextAddr=0x06;                                     //0xFB
+   nextAddr=0x06;                                     //0xFC
+   nextAddr=0x06;                                     //0xFD
+   nextAddr=0x06;                                     //0xFE
+   nextAddr=0x06;                                     //0xFF
+   nextAddr=0x06;                                     //0x100
+   nextAddr=0x49 alu=decB B=pc C=OPC;                 //0x101 T
+   nextAddr=0x06;                                     //0x102
+   nextAddr=0x06;                                     //0x103
+   nextAddr=0x06;                                     //0x104
+   nextAddr=0x06;                                     //0x105
+   nextAddr=0x06;                                     //0x106
+   nextAddr=0x06;                                     //0x107
+   nextAddr=0x06;                                     //0x108
+   nextAddr=0x06;                                     //0x109
+   nextAddr=0x06;                                     //0x10A
+   nextAddr=0x06;                                     //0x10B
+   nextAddr=0x06;                                     //0x10C
+   nextAddr=0x06;                                     //0x10D
+   nextAddr=0x06;                                     //0x10E
+   nextAddr=0x06;                                     //0x10F
+   nextAddr=0x06;                                     //0x110
+   nextAddr=0x06;                                     //0x111
+   nextAddr=0x06;                                     //0x112
+   nextAddr=0x06;                                     //0x113
+   nextAddr=0x06;                                     //0x114
+   nextAddr=0x122 alu=incB B=pc C=PC fetch;           //0x115 WIDE_LOAD1
+   nextAddr=0x06;                                     //0x116
+   nextAddr=0x06;                                     //0x117
+   nextAddr=0x06;                                     //0x118
+   nextAddr=0x06;                                     //0x119
+   nextAddr=0x06;                                     //0x11A
+   nextAddr=0x06;                                     //0x11B
+   nextAddr=0x06;                                     //0x11C
+   nextAddr=0x06;                                     //0x11D
+   nextAddr=0x06;                                     //0x11E
+   nextAddr=0x06;                                     //0x11F
+   nextAddr=0x06;                                     //0x120
+   nextAddr=0x06;                                     //0x121
+   nextAddr=0x123 sh=shl8 B=mbru C=H alu=B;           //0x122 WIDE_ILOAD2
+   nextAddr=0x142 alu=AorB B=mbru C=H;                //0x123 WIDE_ILOAD3
+   nextAddr=0x138 sh=shl8 B=mbru alu=B C=H;           //0x124 WIDE_ISTORE2
+   nextAddr=0x06;                                     //0x125
+   nextAddr=0x06;                                     //0x126
+   nextAddr=0x06;                                     //0x127
+   nextAddr=0x06;                                     //0x128
+   nextAddr=0x06;                                     //0x129
+   nextAddr=0x06;                                     //0x12A
+   nextAddr=0x06;                                     //0x12B
+   nextAddr=0x06;                                     //0x12C
+   nextAddr=0x06;                                     //0x12D
+   nextAddr=0x06;                                     //0x12E
+   nextAddr=0x06;                                     //0x12F
+   nextAddr=0x06;                                     //0x130
+   nextAddr=0x06;                                     //0x131
+   nextAddr=0x06;                                     //0x132
+   nextAddr=0x06;                                     //0x133
+   nextAddr=0x06;                                     //0x134
+   nextAddr=0x06;                                     //0x135
+   nextAddr=0x124 alu=incB B=pc C=PC fetch;           //0x136 WIDE_ISTORE1
+   nextAddr=0x06;                                     //0x137
+   nextAddr=0x170 alu=AorB B=mbru C=H;                //0x138 WIDE_ISTORE3
+   nextAddr=0x06;                                     //0x139
+   nextAddr=0x06;                                     //0x13A
+   nextAddr=0x06;                                     //0x13B
+   nextAddr=0x06;                                     //0x13C
+   nextAddr=0x06;                                     //0x13D
+   nextAddr=0x06;                                     //0x13E
+   nextAddr=0x06;                                     //0x13F
+   nextAddr=0x06;                                     //0x140
+   nextAddr=0x06;                                     //0x141
+   nextAddr=0x23 alu=AplusB B=lv C=MAR rd;            //0x142 WIDE_ILOAD4
+   nextAddr=0x06;                                     //0x143
+   nextAddr=0x06;                                     //0x144
+   nextAddr=0x06;                                     //0x145
+   nextAddr=0x06;                                     //0x146
+   nextAddr=0x06;                                     //0x147
+   nextAddr=0x06;                                     //0x148
+   nextAddr=0x06;                                     //0x149
+   nextAddr=0x06;                                     //0x14A
+   nextAddr=0x06;                                     //0x14B
+   nextAddr=0x06;                                     //0x14C
+   nextAddr=0x06;                                     //0x14D
+   nextAddr=0x06;                                     //0x14E
+   nextAddr=0x06;                                     //0x14F
+   nextAddr=0x06;                                     //0x150
+   nextAddr=0x06;                                     //0x151
+   nextAddr=0x06;                                     //0x152
+   nextAddr=0x06;                                     //0x153
+   nextAddr=0x06;                                     //0x154
+   nextAddr=0x06;                                     //0x155
+   nextAddr=0x06;                                     //0x156
+   nextAddr=0x06;                                     //0x157
+   nextAddr=0x06;                                     //0x158
+   nextAddr=0x06;                                     //0x159
+   nextAddr=0x06;                                     //0x15A
+   nextAddr=0x06;                                     //0x15B
+   nextAddr=0x06;                                     //0x15C
+   nextAddr=0x06;                                     //0x15D
+   nextAddr=0x06;                                     //0x15E
+   nextAddr=0x06;                                     //0x15F
+   nextAddr=0x06;                                     //0x160
+   nextAddr=0x06;                                     //0x161
+   nextAddr=0x06;                                     //0x162
+   nextAddr=0x06;                                     //0x163
+   nextAddr=0x06;                                     //0x164
+   nextAddr=0x06;                                     //0x165
+   nextAddr=0x06;                                     //0x166
+   nextAddr=0x06;                                     //0x167
+   nextAddr=0x06;                                     //0x168
+   nextAddr=0x06;                                     //0x169
+   nextAddr=0x06;                                     //0x16A
+   nextAddr=0x06;                                     //0x16B
+   nextAddr=0x06;                                     //0x16C
+   nextAddr=0x06;                                     //0x16D
+   nextAddr=0x06;                                     //0x16E
+   nextAddr=0x38 alu=AplusB B=lv C=MAR;               //0x170
+end
