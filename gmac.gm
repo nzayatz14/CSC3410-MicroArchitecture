@@ -130,7 +130,7 @@ begin microcode@0
    nextAddr=0x06;                                     //0x3D INF LOOP
    nextAddr=0x06;                                     //0x3E INF LOOP
    nextAddr=0x06;                                     //0x3F INF LOOP
-                                                      //0x40 SKIPPED
+   nextAddr=0x00 B=pc alu=incB C=PC jmpc              //0x40 MAIN1
    nextAddr=0x37 B=pc alu=incB C=PC fetch;            //0x41 BIPUSH2
    nextAddr=0xC0 B=pc alu=incB C=PC fetch wr;         //0x42 ILOAD4
    nextAddr=0x91 B=opc alu=AplusB C=PC fetch;         //0x43 GOTO5
@@ -210,54 +210,54 @@ begin microcode@0
    nextAddr=0x06;                                     //0x8D INF LOOP        
    nextAddr=0x06;                                     //0x8E INF LOOP        
    nextAddr=0x06;                                     //0x8F INF LOOP        
-   nextAddr=0x00;                                     //0x90 SKIPPED
+   nextAddr=0x00 jmpc;                                //0x90 WIDE2
    nextAddr=0x40;                                     //0x91 GOTO6
-   nextAddr=0x00;                                     //0x92 SKIPPED
-   nextAddr=0x00;                                     //0x93 SKIPPED
+   nextAddr=0x01 B=opc alu=B jamz;                    //0x92 IFEQ4
+   nextAddr=0x01 B=opc alu=BminusA jamz;              //0x93 IF_ICMPEQ6
    nextAddr=0xC0;                                     //0x94 POP2
    nextAddr=0x82;                                     //0x95 IRETURN2
-   nextAddr=0x00;                                     //0x96 SKIPPED
-   nextAddr=0x00;                                     //0x97 INF LOOP
-   nextAddr=0x00;                                     //0x98 INF LOOP
+   nextAddr=0x01 B=opc alu=B jamz;                    //0x96 IFLT4
+   nextAddr=0x06;                                     //0x97 INF LOOP
+   nextAddr=0x06;                                     //0x98 INF LOOP
    nextAddr=0xD0 B=sp alu=decB C=MAR rd;              //0x99 IFEQ1
-   nextAddr=0x00;                                     //0x9A INF LOOP
+   nextAddr=0x06;                                     //0x9A INF LOOP
    nextAddr=0xD4 B=sp alu=decB C=MAR rd;              //0x9B IFLT1
-   nextAddr=0x00;                                     //0x9C INF LOOP
-   nextAddr=0x00;                                     //0x9D INF LOOP
-   nextAddr=0x00;                                     //0x9E INF LOOP
+   nextAddr=0x06;                                     //0x9C INF LOOP
+   nextAddr=0x06;                                     //0x9D INF LOOP
+   nextAddr=0x06;                                     //0x9E INF LOOP
    nextAddr=0x26 B=sp alu=decB C=MAR rd;              //0x9F IF_ICMPEQ1
-   nextAddr=0x00;                                     //0xA0 INF LOOP
-   nextAddr=0x00;                                     //0xA1 INF LOOP
-   nextAddr=0x00;                                     //0xA2 INF LOOP
-   nextAddr=0x00;                                     //0xA3 INF LOOP
-   nextAddr=0x00;                                     //0xA4 INF LOOP
-   nextAddr=0x00;                                     //0xA5 INF LOOP
-   nextAddr=0x00;                                     //0xA6 INF LOOP
+   nextAddr=0x06;                                     //0xA0 INF LOOP
+   nextAddr=0x06;                                     //0xA1 INF LOOP
+   nextAddr=0x06;                                     //0xA2 INF LOOP
+   nextAddr=0x06;                                     //0xA3 INF LOOP
+   nextAddr=0x06;                                     //0xA4 INF LOOP
+   nextAddr=0x06;                                     //0xA5 INF LOOP
+   nextAddr=0x06;                                     //0xA6 INF LOOP
    nextAddr=0x49 B=pc alu=decB C=OPC;                 //0xA7 GOTO1
-   nextAddr=0x00;                                     //0xA8 INF LOOP
-   nextAddr=0x00;                                     //0xA9 INF LOOP
-   nextAddr=0x00;                                     //0xAA INF LOOP
-   nextAddr=0x00;                                     //0xAB INF LOOP
+   nextAddr=0x06;                                     //0xA8 INF LOOP
+   nextAddr=0x06;                                     //0xA9 INF LOOP
+   nextAddr=0x06;                                     //0xAA INF LOOP
+   nextAddr=0x06;                                     //0xAB INF LOOP
    nextAddr=0x95 B=lv alu=B C=SP C=MAR rd;            //0xAC IRETURN1
-   nextAddr=0x00;                                     //0xAD INF LOOP
-   nextAddr=0x00;                                     //0xAE INF LOOP
-   nextAddr=0x00;                                     //0xAF INF LOOP
-   nextAddr=0x00;                                     //0xB0 INF LOOP
-   nextAddr=0x00;                                     //0xB1 INF LOOP
-   nextAddr=0x00;                                     //0xB2 INF LOOP
-   nextAddr=0x00;                                     //0xB3 INF LOOP
-   nextAddr=0x00;                                     //0xB4 INF LOOP
-   nextAddr=0x00;                                     //0xB5 INF LOOP
+   nextAddr=0x06;                                     //0xAD INF LOOP
+   nextAddr=0x06;                                     //0xAE INF LOOP
+   nextAddr=0x06;                                     //0xAF INF LOOP
+   nextAddr=0x06;                                     //0xB0 INF LOOP
+   nextAddr=0x06;                                     //0xB1 INF LOOP
+   nextAddr=0x06;                                     //0xB2 INF LOOP
+   nextAddr=0x06;                                     //0xB3 INF LOOP
+   nextAddr=0x06;                                     //0xB4 INF LOOP
+   nextAddr=0x06;                                     //0xB5 INF LOOP
    nextAddr=0xEA B=pc alu=incB C=PC fetch;            //0xB6 INVOKEVIRTUAL1
-   nextAddr=0x00;                                     //0xB7 INF LOOP
-   nextAddr=0x00;                                     //0xB8 INF LOOP
-   nextAddr=0x00;                                     //0xB9 INF LOOP
-   nextAddr=0x00;                                     //0xBA INF LOOP
-   nextAddr=0x00;                                     //0xBB INF LOOP
-   nextAddr=0x00;                                     //0xBC INF LOOP
-   nextAddr=0x00;                                     //0xBD INF LOOP
-   nextAddr=0x00;                                     //0xBE INF LOOP
-   nextAddr=0x00;                                     //0xBF INF LOOP
+   nextAddr=0x06;                                     //0xB7 INF LOOP
+   nextAddr=0x06;                                     //0xB8 INF LOOP
+   nextAddr=0x06;                                     //0xB9 INF LOOP
+   nextAddr=0x06;                                     //0xBA INF LOOP
+   nextAddr=0x06;                                     //0xBB INF LOOP
+   nextAddr=0x06;                                     //0xBC INF LOOP
+   nextAddr=0x06;                                     //0xBD INF LOOP
+   nextAddr=0x06;                                     //0xBE INF LOOP
+   nextAddr=0x06;                                     //0xBF INF LOOP
    nextAddr=0x40 B=mdr alu=B C=TOS;                   //0xC0 POP3
    nextAddr=0x40 alu=A C=TOS;                         //0xC1 SWAP6 
    nextAddr=0x92 B=mdr alu=B C=TOS;                   //0xC2 IFEQ3
@@ -266,30 +266,30 @@ begin microcode@0
    nextAddr=0x4C B=tos alu=incB C=MAR C=TOS;          //0xC5 INVOKEVIRTUAL12
    nextAddr=0x93 B=mdr alu=B C=TOS;                   //0xC6 IF_ICMPEQ5
    nextAddr=0x96 B=mdr alu=B C=TOS;                   //0xC7 IFLT3
-   nextAddr=0x00;                                     //0xC8 INF LOOP
-   nextAddr=0x00;                                     //0xC9 INF LOOP
-   nextAddr=0x00;                                     //0xCA INF LOOP
-   nextAddr=0x00;                                     //0xCB INF LOOP
-   nextAddr=0x00;                                     //0xCC INF LOOP
-   nextAddr=0x00;                                     //0xCD INF LOOP
-   nextAddr=0x00;                                     //0xCE INF LOOP
-   nextAddr=0x00;                                     //0xCF INF LOOP
+   nextAddr=0x06;                                     //0xC8 INF LOOP
+   nextAddr=0x06;                                     //0xC9 INF LOOP
+   nextAddr=0x06;                                     //0xCA INF LOOP
+   nextAddr=0x06;                                     //0xCB INF LOOP
+   nextAddr=0x06;                                     //0xCC INF LOOP
+   nextAddr=0x06;                                     //0xCD INF LOOP
+   nextAddr=0x06;                                     //0xCE INF LOOP
+   nextAddr=0x06;                                     //0xCF INF LOOP
    nextAddr=0xC2 B=tos alu=B C=OPC;                   //0xD0 IFEQ2
    nextAddr=0x44 B=pc alu=incB C=OPC;                 //0xD1 INVOKEVIRTUAL5
    nextAddr=0xC6 B=tos alu=B C=OPC;                   //0xD2 IF_ICMPEQ4
-   nextAddr=0x00;                                     //0xD3 INF LOOP
+   nextAddr=0x06;                                     //0xD3 INF LOOP
    nextAddr=0xC7 B=tos alu=B C=OPC;                   //0xD4 IFLT2
-   nextAddr=0x00;                                     //0xD5 INF LOOP
-   nextAddr=0x00;                                     //0xD6 INF LOOP
-   nextAddr=0x00;                                     //0xD7 INF LOOP
-   nextAddr=0x00;                                     //0xD8 INF LOOP
-   nextAddr=0x00;                                     //0xD9 INF LOOP
-   nextAddr=0x00;                                     //0xDA INF LOOP
-   nextAddr=0x00;                                     //0xDB INF LOOP
-   nextAddr=0x00;                                     //0xDC INF LOOP
-   nextAddr=0x00;                                     //0xDD INF LOOP
-   nextAddr=0x00;                                     //0xDE INF LOOP
-   nextAddr=0x00;                                     //0xDF INF LOOP
+   nextAddr=0x06;                                     //0xD5 INF LOOP
+   nextAddr=0x06;                                     //0xD6 INF LOOP
+   nextAddr=0x06;                                     //0xD7 INF LOOP
+   nextAddr=0x06;                                     //0xD8 INF LOOP
+   nextAddr=0x06;                                     //0xD9 INF LOOP
+   nextAddr=0x06;                                     //0xDA INF LOOP
+   nextAddr=0x06;                                     //0xDB INF LOOP
+   nextAddr=0x06;                                     //0xDC INF LOOP
+   nextAddr=0x06;                                     //0xDD INF LOOP
+   nextAddr=0x06;                                     //0xDE INF LOOP
+   nextAddr=0x06;                                     //0xDF INF LOOP
    nextAddr=0x30 B=tos alu=B C=H;                     //0xE0 IADD2
    nextAddr=0x35 B=mdr alu=B C=H wr;                  //0xE1 SWAP3
    nextAddr=0xE3 B=mbru alu=AorB C=H sh=shl8;         //0xE2 LDC_W2
