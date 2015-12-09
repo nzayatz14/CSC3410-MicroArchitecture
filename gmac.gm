@@ -130,7 +130,7 @@ begin microcode@0
    nextAddr=0x06;                                     //0x3D INF LOOP
    nextAddr=0x06;                                     //0x3E INF LOOP
    nextAddr=0x06;                                     //0x3F INF LOOP
-   nextAddr=0x00 B=pc alu=incB C=PC jmpc              //0x40 MAIN1
+   nextAddr=0x00 B=pc alu=incB C=PC fetch jmpc;       //0x40 MAIN1
    nextAddr=0x37 B=pc alu=incB C=PC fetch;            //0x41 BIPUSH2
    nextAddr=0xC0 B=pc alu=incB C=PC fetch wr;         //0x42 ILOAD4
    nextAddr=0x91 B=opc alu=AplusB C=PC fetch;         //0x43 GOTO5
@@ -183,15 +183,15 @@ begin microcode@0
    nextAddr=0x06;                                     //0x72 INF LOOP
    nextAddr=0x06;                                     //0x73 INF LOOP
    nextAddr=0x06;                                     //0x74 INF LOOP
-   nextAddr=0x06;                                     //0x75 LOADPC1
-   nextAddr=0x06;                                     //0x76 LOADLV1
-   nextAddr=0x06;                                     //0x77 LOADCPP
-   nextAddr=0x06;                                     //0x78 LOADSP
-   nextAddr=0x06;                                     //0x79 INF LOOP
-   nextAddr=0x06;                                     //0x7A INF LOOP
-   nextAddr=0x06;                                     //0x7B INF LOOP
-   nextAddr=0x06;                                     //0x7C INF LOOP
-   nextAddr=0x06;                                     //0x7D INF LOOP
+   nextAddr=0x76 C=MAR C=H alu=one rd;                //0x75 BOOT1
+   nextAddr=0x77 C=MAR C=H alu=incA;                  //0x76 BOOT2
+   nextAddr=0x78 C=SP alu=B B=mdr rd;                 //0x77 BOOT3
+   nextAddr=0x79 C=MAR C=H alu=incA;                  //0x78 BOOT4
+   nextAddr=0x7A C=CPP B=mdr alu=B rd;                //0x79 BOOT5
+   nextAddr=0x7B C=MAR C=H alu=incA;                  //0x7A BOOT6
+   nextAddr=0x7C C=LV B=mdr alu=B rd;                 //0x7B BOOT7
+   nextAddr=0x7D C=MAR C=H alu=incA;                  //0x7C BOOT8
+   nextAddr=0x00 C=PC B=mdr alu=B fetch;              //0x7D BOOT9
    nextAddr=0xE8 B=sp alu=decB C=MAR C=SP;            //0x7E IAND1
    nextAddr=0x06;                                     //0x7F INF LOOP 
    nextAddr=0xE9 B=sp alu=incB C=SP C=MAR;            //0x80 IOR1
@@ -258,7 +258,7 @@ begin microcode@0
    nextAddr=0x06;                                     //0xBD INF LOOP
    nextAddr=0x06;                                     //0xBE INF LOOP
    nextAddr=0x06;                                     //0xBF INF LOOP
-   nextAddr=0x40 B=mdr alu=B C=TOS;                   //0xC0 POP3
+   nextAddr=0x40 B=mdr alu=B C=TOS;                   //0xC0 POP3 ILOAD5 ISTORE 6
    nextAddr=0x40 alu=A C=TOS;                         //0xC1 SWAP6 
    nextAddr=0x92 B=mdr alu=B C=TOS;                   //0xC2 IFEQ3
    nextAddr=0xC5 B=sp alu=BminusA C=TOS;              //0xC3 INVOKEVIRTUAL11
