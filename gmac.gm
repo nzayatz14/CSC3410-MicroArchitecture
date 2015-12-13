@@ -104,7 +104,7 @@ begin microcode@0
    nextAddr=0x42 B=sp alu=incB C=MAR C=SP;            //0x23 ILOAD3
    nextAddr=0x38 B=mbru alu=AplusB C=MAR;             //0x24 ISTORE2
    nextAddr=0x23 B=cpp alu=AplusB C=MAR rd;           //0x25 LDC_W4
-   nextAddr=0xE6 B=sp alu=decB C=MAR C=SP;            //0x26 IF_CMPEQ2
+   nextAddr=0xE6 B=sp alu=decB C=MAR C=SP;            //0x26 IF_ICMPEQ2
    nextAddr=0xD1 B=cpp alu=AplusB C=MAR rd;           //0x27 INVOKEVIRTUAL4
    nextAddr=0x3B B=mdr alu=B C=MAR C=SP;              //0x28 INVOKEVIRTUAL17
    nextAddr=0x45 B=lv alu=incB C=MAR;                 //0x29 IRETURN4
@@ -211,21 +211,21 @@ begin microcode@0
    nextAddr=0x06;                                     //0x8E INF LOOP        
    nextAddr=0x06;                                     //0x8F INF LOOP        
    nextAddr=0x00 jmpc;                                //0x90 WIDE2
-   nextAddr=0x40;                                     //0x91 GOTO6
+   nextAddr=0x40;                                     //0x91 GOTO6 F3
    nextAddr=0x01 B=opc alu=B jamz;                    //0x92 IFEQ4
    nextAddr=0x01 B=opc alu=BminusA jamz;              //0x93 IF_ICMPEQ6
    nextAddr=0xC0;                                     //0x94 POP2
    nextAddr=0x82;                                     //0x95 IRETURN2
-   nextAddr=0x01 B=opc alu=B jamz;                    //0x96 IFLT4
+   nextAddr=0x01 B=opc alu=B jamn;                    //0x96 IFLT4
    nextAddr=0x06;                                     //0x97 INF LOOP
    nextAddr=0x06;                                     //0x98 INF LOOP
    nextAddr=0xD0 B=sp alu=decB C=MAR rd;              //0x99 IFEQ1
    nextAddr=0x06;                                     //0x9A INF LOOP
-   nextAddr=0xD4 B=sp alu=decB C=MAR rd;              //0x9B IFLT1
+   nextAddr=0xD4 B=sp alu=decB C=MAR C=SP rd;         //0x9B IFLT1
    nextAddr=0x06;                                     //0x9C INF LOOP
    nextAddr=0x06;                                     //0x9D INF LOOP
    nextAddr=0x06;                                     //0x9E INF LOOP
-   nextAddr=0x26 B=sp alu=decB C=MAR rd;              //0x9F IF_ICMPEQ1
+   nextAddr=0x26 B=sp alu=decB C=MAR C=SP rd;         //0x9F IF_ICMPEQ1
    nextAddr=0x06;                                     //0xA0 INF LOOP
    nextAddr=0x06;                                     //0xA1 INF LOOP
    nextAddr=0x06;                                     //0xA2 INF LOOP
@@ -258,7 +258,7 @@ begin microcode@0
    nextAddr=0x06;                                     //0xBD INF LOOP
    nextAddr=0x06;                                     //0xBE INF LOOP
    nextAddr=0x06;                                     //0xBF INF LOOP
-   nextAddr=0x40 B=mdr alu=B C=TOS;                   //0xC0 POP3 ILOAD5 ISTORE 6
+   nextAddr=0x40 B=mdr alu=B C=TOS;                   //0xC0 POP3 ILOAD5 ISTORE6
    nextAddr=0x40 alu=A C=TOS;                         //0xC1 SWAP6 
    nextAddr=0x92 B=mdr alu=B C=TOS;                   //0xC2 IFEQ3
    nextAddr=0xC5 B=sp alu=BminusA C=TOS;              //0xC3 INVOKEVIRTUAL11
