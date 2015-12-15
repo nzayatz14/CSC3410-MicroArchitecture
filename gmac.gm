@@ -76,7 +76,7 @@ begin microcode@0
    nextAddr=0x06;                                     //0x07 INF LOOP
    nextAddr=0x06;                                     //0x08 INF LOOP
    nextAddr=0x06;                                     //0x09 INF LOOP
-   nextAddr=0x06;                                     //0x0A INF LOOP
+   nextAddr=0x06;                                     //0x0A HALT
    nextAddr=0x06;                                     //0x0B INF LOOP
    nextAddr=0x06;                                     //0x0C INF LOOP
    nextAddr=0x06;                                     //0x0D INF LOOP
